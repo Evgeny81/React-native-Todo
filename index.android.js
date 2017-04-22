@@ -9,22 +9,37 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
+  View,
+  TextInput,
+  TouchableHighlight
+} from 'react-native'
 
 class Project extends Component {
+  constructor() {
+    super();
+    this.state = {
+      todos: [1,2,3],
+      newTodo: ''
+    }
+  }
+  
+  handleChange(e) {
+    const {value} = e.target;
+    this.setState({newTodo: value})
+  }
+  
+  handlePress() {
+    
+  }
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press
-        </Text>
+          <TextInput value={this.state.newTodo} onChange={this.handleChange.bind(this)}/>
+          <TouchableHighlight onPress={this.handlePress.bind(this)}>
+              <Text>tap me</Text>
+          </TouchableHighlight>
+          {this.state.todos.map((todo, i) => <Text key={i}>{todo}</Text>)}
       </View>
     );
   }

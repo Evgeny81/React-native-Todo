@@ -11,22 +11,25 @@ import {
   StyleSheet,
   Text,
   View,
+  TextInput
 } from 'react-native'
 
 class Project extends Component {
+  constructor() {
+    super();
+    this.state = {
+      todos: [1,2,3]
+    }
+  }
+  
+  handleChange() {
+    
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Cmd+R to reload,{'\n'}
-          Cmd+D
-        </Text>
+          <TextInput onChange={this.handleChange}/>
+          {this.state.todos.map(todo => <Text key={todo}>{todo}</Text>)}
       </View>
     );
   }
