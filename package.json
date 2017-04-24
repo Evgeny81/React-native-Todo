@@ -8,6 +8,8 @@
   "dependencies": {
     "react": "^15.1.0",
     "react-native": "^0.27.2",
-    "react-native-navbar": "^1.7.1"
+    "react-native-navbar": "^1.7.1",
+    "react-redux": "^5.0.4",
+    "redux": "^3.6.0"
   }
 }
