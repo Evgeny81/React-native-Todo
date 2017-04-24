@@ -17,14 +17,39 @@ export class Todo extends Component {
     }
   }
   
+  componentWillMount() {//Getting data from server
+    fetch('http://192.168.0.100:3000/todos', {//localhost did't work, I don't know why
+      headers: {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(todos => this.setState({todos}))
+  }
+   
   handleChange(text) {
     this.setState({newTodo: text})
   }
   
-  handlePress() {
-    const todos = [...this.state.todos, this.state.newTodo];
-    console.warn(JSON.stringify(this.state, null, 2));
-    this.setState({todos, newTodo: ""})
+  handlePress() {//Post data to server
+    fetch('http://192.168.0.100:3000/todos',{
+      method: 'post',
+      body: JSON.stringify({//Always stringify body
+        name: this.state.newTodo
+      }),
+      headers: {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .catch(error => console.warn("fetch error:", error))
+    .then(res => res.json())
+    .then(data => {
+      const todos = [...this.state.todos, data];
+      this.setState({todos, newTodo: ""});
+    })
+
   }
   
   render() {
@@ -47,7 +72,7 @@ export class Todo extends Component {
         <View style = {styles.todos}>
           {this.state.todos.map((todo, i) => 
             <View style = {styles.todo} key={i}>
-              <Text style = {styles.todoText}>{todo}</Text>
+              <Text style = {styles.todoText}>{todo.name}</Text>
             </View>
             )}
         </View>
