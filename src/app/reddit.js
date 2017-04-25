@@ -3,36 +3,16 @@ import {
   Text,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
 
-export class Reddit extends Component {
-  
-  constructor() {
-    super();
-    this.state = {
-      posts: []
-    }
-  }
-  componentWillMount(){
-    fetch('https://www.reddit.com/.json',{//Get request by default, shorthand, method type should be written in the other way
-      Accept: 'application/json'
-    })
-    .then(res => res.json())
-    .then(data => {
-      this.setState({posts: data.data.children})
-    })
-  }
-  render() {
-    return (
+const _Reddit=(props)=>(
       <View>
-        <Text>
-          Reddit
-        </Text>
-        <View>
-          {this.state.posts.map((post,i) => (
-            <Text key={i}>{post.data.author}</Text>
-          ))}
-        </View>
+        {this.props.posts.map(posts => <Text>{posts.name}</Text> )}
       </View>
-    )
-  }
-}
+  )
+
+const mapStateToProps= (state) => ({
+  posts: state.reddit
+})
+
+export const Reddit = connect(mapStateToProps, null)(_Reddit)
